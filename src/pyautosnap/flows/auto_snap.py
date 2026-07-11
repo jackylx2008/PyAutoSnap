@@ -23,6 +23,7 @@ def run(context: AppContext) -> list[ScreenshotResult]:
     flash_after_capture = _to_bool(flow_config.get("flash_after_capture", False))
     flash_cycles = _non_negative_int(flow_config.get("flash_cycles", 2), "flash_cycles")
     flash_duration_ms = _positive_int(flow_config.get("flash_duration_ms", 160), "flash_duration_ms")
+    flash_hold_ms = _non_negative_int(flow_config.get("flash_hold_ms", 0), "flash_hold_ms")
     flash_border_width = _positive_int(flow_config.get("flash_border_width", 6), "flash_border_width")
 
     logger.info(
@@ -51,6 +52,7 @@ def run(context: AppContext) -> list[ScreenshotResult]:
                         settings.region,
                         cycles=flash_cycles,
                         duration_ms=flash_duration_ms,
+                        hold_ms=flash_hold_ms,
                         border_width=flash_border_width,
                     )
                 except Exception as exc:

@@ -49,13 +49,16 @@ def flash_capture_region(
     region: tuple[int, int, int, int] | None,
     cycles: int = 2,
     duration_ms: int = 160,
+    hold_ms: int = 0,
     border_width: int = 6,
     alpha: int = 220,
 ) -> None:
-    """Flash a red border around the captured area on Windows."""
+    """Flash a red border around the captured area on Windows, then optionally keep it visible."""
     if platform.system().lower() != "windows":
         return
-    if cycles <= 0 or duration_ms <= 0:
+    if cycles <= 0 and hold_ms <= 0:
+        return
+    if cycles > 0 and duration_ms <= 0:
         return
 
     left, top, right, bottom = region or _virtual_screen_region()
@@ -82,6 +85,11 @@ def flash_capture_region(
             for handle in handles:
                 ctypes.windll.user32.ShowWindow(handle, SW_HIDE)
             time.sleep(duration_ms / 1000)
+        if hold_ms > 0:
+            for handle in handles:
+                ctypes.windll.user32.ShowWindow(handle, SW_SHOWNOACTIVATE)
+                ctypes.windll.user32.UpdateWindow(handle)
+            time.sleep(hold_ms / 1000)
     finally:
         for handle in handles:
             ctypes.windll.user32.DestroyWindow(handle)
