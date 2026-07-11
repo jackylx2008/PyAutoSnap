@@ -30,6 +30,18 @@ python -m venv .venv
 .\.venv\Scripts\python.exe list_screens.py
 ```
 
+该命令还会截取一张包含全部屏幕的参考图，默认保存到项目根目录 `test/`：
+
+```text
+fullscreen_screenshot=D:\...\PyAutoSnap\test\fullscreen_20260711_170000_0001.png
+```
+
+如果只想列出屏幕信息，不保存参考截图：
+
+```powershell
+.\.venv\Scripts\python.exe list_screens.py --no-screenshot
+```
+
 输出示例：
 
 ```text
@@ -69,4 +81,4 @@ flows:
 
 ## Git 同步注意
 
-`COMMON_PROJECT_SKILLS.md` 是本地项目规则文件，不提交到仓库。运行产物、日志、本机环境文件和虚拟环境也已通过 `.gitignore` 排除。
+`COMMON_PROJECT_SKILLS.md` 是本地项目规则文件，不提交到仓库。运行产物、日志、本机环境文件、虚拟环境和 `test/` 参考截图也已通过 `.gitignore` 排除。
