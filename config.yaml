@@ -11,4 +11,11 @@ flows:
     filename_template: "snap_{timestamp}_{sequence:04d}.{extension}"
     all_screens: true
     jpeg_quality: 95
+    # 固定屏幕固定区域示例：
+    # region:
+    #   screen_index: 3
+    #   left: 100
+    #   top: 200
+    #   width: 800
+    #   height: 600
     region:

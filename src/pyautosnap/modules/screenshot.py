@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from pyautosnap.config_loader import resolve_path_value
+from pyautosnap.modules.monitors import get_monitor
 
 
 SUPPORTED_FORMATS = {"png": "PNG", "jpg": "JPEG", "jpeg": "JPEG"}
@@ -109,13 +110,23 @@ def _parse_region(value: Any) -> tuple[int, int, int, int] | None:
         return None
     if not isinstance(value, dict):
         raise ValueError("region must be null or a mapping with left/top/width/height")
+    screen_index = value.get("screen_index")
+    monitor_left = 0
+    monitor_top = 0
+    if screen_index not in (None, ""):
+        monitor = get_monitor(int(screen_index))
+        monitor_left = monitor.left
+        monitor_top = monitor.top
+
     left = int(value.get("left", 0))
     top = int(value.get("top", 0))
     width = int(value["width"])
     height = int(value["height"])
     if width <= 0 or height <= 0:
         raise ValueError("region width and height must be positive")
-    return (left, top, left + width, top + height)
+    global_left = monitor_left + left
+    global_top = monitor_top + top
+    return (global_left, global_top, global_left + width, global_top + height)
 
 
 def _to_bool(value: Any) -> bool:

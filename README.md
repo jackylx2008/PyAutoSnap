@@ -22,19 +22,36 @@ python -m venv .venv
 - `flows.auto_snap.capture_count`：截图次数，`0` 表示持续运行直到手动停止
 - `flows.auto_snap.image_format`：图片格式，支持 `png`、`jpg`、`jpeg`
 - `flows.auto_snap.filename_template`：文件名模板，可使用 `{timestamp}`、`{sequence}`、`{extension}`
-- `flows.auto_snap.region`：可选区域截图，留空表示全屏
+- `flows.auto_snap.region`：可选区域截图，留空表示全屏；可写全局坐标，也可写 `screen_index` 加屏幕内坐标
 
-区域截图示例：
+先列出当前 Windows 显示器坐标：
+
+```powershell
+.\.venv\Scripts\python.exe list_screens.py
+```
+
+输出示例：
+
+```text
+index=1 device=\\.\DISPLAY1 primary=yes left=0 top=0 width=2560 height=1440 right=2560 bottom=1440
+index=2 device=\\.\DISPLAY2 primary=no left=-1920 top=0 width=1920 height=1080 right=0 bottom=1080
+index=3 device=\\.\DISPLAY3 primary=no left=2560 top=0 width=1920 height=1080 right=4480 bottom=1080
+```
+
+固定屏幕内区域截图示例：
 
 ```yaml
 flows:
   auto_snap:
     region:
-      left: 0
-      top: 0
-      width: 1280
-      height: 720
+      screen_index: 3
+      left: 100
+      top: 200
+      width: 800
+      height: 600
 ```
+
+这表示截取 `list_screens.py` 输出中 `index=3` 的屏幕，从该屏幕左上角往右 `100`、往下 `200` 开始的 `800x600` 区域。
 
 ## 运行
 
