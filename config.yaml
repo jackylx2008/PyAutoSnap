@@ -1,0 +1,14 @@
+app:
+  log_level: "${LOG_LEVEL:-INFO}"
+  output_dir: "${OUTPUT_DIR:-output/screenshots}"
+  default_entry: "autosnap"
+
+flows:
+  auto_snap:
+    interval_seconds: "${SNAP_INTERVAL_SECONDS:-60}"
+    capture_count: "${SNAP_CAPTURE_COUNT:-0}"
+    image_format: "${SNAP_IMAGE_FORMAT:-png}"
+    filename_template: "snap_{timestamp}_{sequence:04d}.{extension}"
+    all_screens: true
+    jpeg_quality: 95
+    region:

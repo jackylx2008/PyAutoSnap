@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+output/
+log/
+logs/
+*.env
+common.env
+COMMON_PROJECT_SKILLS.md
+LOCAL_AI_RUNTIME_SETUP.md
+
+vendor/
+*.log
