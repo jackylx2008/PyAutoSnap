@@ -23,6 +23,7 @@ python -m venv .venv
 - `flows.auto_snap.image_format`：图片格式，支持 `png`、`jpg`、`jpeg`
 - `flows.auto_snap.filename_template`：文件名模板，可使用 `{timestamp}`、`{sequence}`、`{extension}`
 - `flows.auto_snap.region`：可选区域截图，留空表示全屏；可写全局坐标，也可写 `screen_index` 加屏幕内坐标
+- `flows.auto_snap.flash_after_capture`：截图保存后在被截区域闪烁红色边框，便于人工确认截图范围
 
 先列出当前 Windows 显示器坐标：
 
@@ -55,6 +56,10 @@ index=3 device=\\.\DISPLAY3 primary=no left=2560 top=0 width=1920 height=1080 ri
 ```yaml
 flows:
   auto_snap:
+    flash_after_capture: true
+    flash_cycles: 2
+    flash_duration_ms: 160
+    flash_border_width: 6
     region:
       screen_index: 3
       left: 100
